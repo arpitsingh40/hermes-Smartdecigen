@@ -1,0 +1,6 @@
+name: forge-growth
+version: "0.1.0"
+description: "Business graph, root-cause walker, opportunity scanner and 10x growth planner on pre_llm_call. Maps the message to one of 16 business functions, walks UPSTREAM through the dependency graph to the real constraint, surfaces knowledge-base growth avenues, and injects the 10x planning frame on an explicit growth request. Needs no database — the graph supplies structure, the message supplies the symptom."
+author: "FORGE"
+provides_hooks:
+  - pre_llm_call

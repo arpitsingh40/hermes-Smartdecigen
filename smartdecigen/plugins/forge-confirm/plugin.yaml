@@ -1,0 +1,6 @@
+name: forge-confirm
+version: "0.1.0"
+description: "Final quality gate on the reply: one host-owned LLM call that checks the draft actually answers what was asked and rewrites it for connection if not. Rides transform_llm_output (first non-empty string replaces the response). OFF by default because it costs one extra LLM call per turn — set FORGE_CONFIRM=1. Fails OPEN: any error keeps the draft."
+author: "FORGE"
+provides_hooks:
+  - transform_llm_output

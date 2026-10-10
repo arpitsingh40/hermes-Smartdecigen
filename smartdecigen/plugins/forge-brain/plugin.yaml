@@ -1,0 +1,6 @@
+name: forge-brain
+version: "0.1.0"
+description: "Decision-science reasoning lenses applied per turn. Routes the message into one of 9 founder decision types (each carrying a step-by-step reasoning algorithm) and injects the 3 most relevant modules from a 166-book decision-science library as applied frameworks. Rides pre_llm_call, which injects into the user message — never the system prompt — so Hermes' prompt-caching invariant is preserved. Zero LLM cost; an off-topic turn injects nothing."
+author: "FORGE"
+provides_hooks:
+  - pre_llm_call

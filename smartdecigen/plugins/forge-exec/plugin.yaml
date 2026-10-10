@@ -1,0 +1,10 @@
+name: forge-exec
+version: "0.1.0"
+description: "The execution layer: idempotent, kernel-gated, audited business actions. Dry-run by default; side effects require FORGE_EXEC_LIVE=1. Fails closed when the governance kernel is unreachable."
+author: "FORGE"
+provides_tools:
+  - forge_log_action
+  - forge_queue_action
+  - forge_list_queue
+  - forge_record_metric
+  - forge_send_message

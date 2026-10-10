@@ -1,0 +1,920 @@
+{
+ "dependency_graph": {
+  "vision": [],
+  "strategy": [
+   "vision"
+  ],
+  "product": [
+   "vision",
+   "strategy"
+  ],
+  "marketing": [
+   "strategy",
+   "product"
+  ],
+  "sales": [
+   "marketing",
+   "product"
+  ],
+  "finance": [
+   "sales"
+  ],
+  "operations": [
+   "product",
+   "sales",
+   "finance"
+  ],
+  "hr": [
+   "strategy"
+  ],
+  "customer_success": [
+   "sales",
+   "product"
+  ],
+  "technology": [
+   "product"
+  ],
+  "legal": [
+   "strategy",
+   "finance"
+  ],
+  "supply_chain": [
+   "operations",
+   "product"
+  ],
+  "data": [
+   "sales",
+   "marketing",
+   "product",
+   "operations"
+  ],
+  "brand": [
+   "marketing",
+   "product",
+   "customer_success"
+  ],
+  "partnerships": [
+   "strategy",
+   "sales"
+  ],
+  "growth": [
+   "marketing",
+   "sales",
+   "product"
+  ]
+ },
+ "function_labels": {
+  "vision": "Vision & Mission",
+  "strategy": "Strategy & Positioning",
+  "product": "Product & Value Prop",
+  "marketing": "Marketing & Demand Gen",
+  "sales": "Sales & Conversion",
+  "finance": "Finance & Cash Flow",
+  "operations": "Operations & Efficiency",
+  "hr": "People & Talent",
+  "customer_success": "Customer Success & Retention",
+  "technology": "Technology & Engineering",
+  "legal": "Legal & Compliance",
+  "supply_chain": "Supply Chain & Logistics",
+  "data": "Data & Analytics",
+  "brand": "Brand & Trust",
+  "partnerships": "Partnerships & Alliances",
+  "growth": "Growth & Expansion"
+ },
+ "symptom_patterns": [
+  [
+   "\\b(revenue|sales).*(dropping|declining|falling|down|decreasing|flat|stalled|slow)|(dropping|declining|falling).*(revenue|sales)",
+   "sales"
+  ],
+  [
+   "\\b(churn|cancelled|leaving|quitting|customer.*los)",
+   "customer_success"
+  ],
+  [
+   "\\b(not selling|no traction|product.*market.*fit.*not|no.*pmf)\\b",
+   "product"
+  ],
+  [
+   "\\b(engineering.*slow|velocity.*problem|deploy.*slow|release.*slow|tech.*debt)\\b",
+   "technology"
+  ],
+  [
+   "\\b(running out of money|cash.*running|runway.*problem|out of cash|burn.*rate.*high)\\b",
+   "finance"
+  ],
+  [
+   "\\b(can.?t.*(hire|find|recruit)|hiring.*(can.?t|problem|hard)|talent.*(shortage|problem))\\b",
+   "hr"
+  ],
+  [
+   "\\b(marketing.*(not working|fail|broken)|campaign.*fail|leads.*(dry|dead|none)|demand.*(dead|none))\\b",
+   "marketing"
+  ],
+  [
+   "\\b(growth.*(stalled|plateau|flat|none|slow|stopped)|(hit|reached).*ceiling|not.*growing)\\b",
+   "growth"
+  ],
+  [
+   "\\b(competitor|competition|undercut|losing to|losing deals|market.*share.*los)\\b",
+   "strategy"
+  ],
+  [
+   "\\b(ops.*broken|process.*broken|bottleneck|always.*(behind|late)|efficiency.*problem)\\b",
+   "operations"
+  ],
+  [
+   "\\b(brand.*problem|trust.*issue|reputation.*damag|bad.*press|negative.*review)\\b",
+   "brand"
+  ],
+  [
+   "\\b(data.*wrong|wrong.*number|dashboard.*broken|data.*broken|bad.*metric)\\b",
+   "data"
+  ],
+  [
+   "\\b(partnership.*(sour|fail|problem|broke)|partner.*(problem|fail)|alliance.*(broke|fail))\\b",
+   "partnerships"
+  ],
+  [
+   "\\b(founder.*(burnout|burnt|overwhelm|stressed|can.?t.*do.*this))\\b",
+   "leadership"
+  ],
+  [
+   "\\b(team.*conflict|co.?founder.*(fight|problem|conflict)|everyone.*leaving|morale.*(low|problem))\\b",
+   "leadership"
+  ]
+ ],
+ "opportunity_patterns": {
+  "product": [
+   {
+    "pattern": "Adjacent market: what's the natural next segment after your current users?",
+    "source": "Crossing the Chasm, Blue Ocean Strategy"
+   },
+   {
+    "pattern": "Product extension: which feature do power users hack together themselves?",
+    "source": "The Mom Test, Competing Against Luck"
+   },
+   {
+    "pattern": "Platform play: can your product become the infrastructure others build on?",
+    "source": "7 Powers, Zero to One"
+   }
+  ],
+  "marketing": [
+   {
+    "pattern": "Under-served channel: where do your customers already hang out that competitors ignore?",
+    "source": "Traction, Purple Cow"
+   },
+   {
+    "pattern": "Story gap: what belief about your category is widely held but wrong?",
+    "source": "Building a StoryBrand, Made to Stick"
+   },
+   {
+    "pattern": "Earned attention: what can you do that's so remarkable people talk about it unprompted?",
+    "source": "Contagious, Purple Cow, The Tipping Point"
+   }
+  ],
+  "sales": [
+   {
+    "pattern": "Up-sell path: what do your best customers naturally need next?",
+    "source": "SPIN Selling, How Brands Grow"
+   },
+   {
+    "pattern": "Partnership distribution: who already has your customer and isn't competing?",
+    "source": "Traction, Business Model Generation"
+   }
+  ],
+  "strategy": [
+   {
+    "pattern": "Strategic inflection point: is a technology/market shift creating a new game where you have an advantage?",
+    "source": "7 Powers, The Innovator's Dilemma"
+   },
+   {
+    "pattern": "Unbundling opportunity: which part of an incumbent's bundle can you do 10x better?",
+    "source": "Business Model Generation, Zero to One"
+   },
+   {
+    "pattern": "Counter-positioning: can you adopt a model the incumbent can't copy without hurting themselves?",
+    "source": "7 Powers, Good Strategy Bad Strategy"
+   }
+  ]
+ },
+ "failure_modes": {
+  "vision": [
+   {
+    "failure": "No written mission statement — team operates on unstated assumptions",
+    "book": "Start With Why (Sinek)"
+   },
+   {
+    "failure": "Mission is vague platitudes ('world-class excellence') — nobody can act on it",
+    "book": "Good Strategy/Bad Strategy (Rumelt)"
+   },
+   {
+    "failure": "Mission changes every quarter — no persistent north star",
+    "book": "The Infinite Game (Sinek)"
+   },
+   {
+    "failure": "Mission exists but founder never references it in decisions",
+    "book": "Start With Why (Sinek)"
+   },
+   {
+    "failure": "Can't describe where the company will be in 5 years with specificity",
+    "book": "Good to Great (Collins)"
+   },
+   {
+    "failure": "Vision is purely financial ('$100M ARR') — uninspiring, no product/impact story",
+    "book": "Built to Last (Collins & Porras)"
+   },
+   {
+    "failure": "Vision too small — incremental improvement vs category creation",
+    "book": "Zero to One (Thiel)"
+   },
+   {
+    "failure": "Vision too grandiose — no bridge from today to the vision",
+    "book": "Good Strategy/Bad Strategy (Rumelt)"
+   },
+   {
+    "failure": "No explicit company values — culture is whatever the loudest person says",
+    "book": "The Culture Code (Coyle)"
+   },
+   {
+    "failure": "Values are aspirational, not behavioral ('integrity' but no one gets fired for violating it)",
+    "book": "Principles (Dalio)"
+   },
+   {
+    "failure": "Values are different from what's actually rewarded",
+    "book": "What Got You Here Won't Get You There (Goldsmith)"
+   },
+   {
+    "failure": "Values not used in hiring, firing, or promotion decisions",
+    "book": "High Output Management (Grove)"
+   }
+  ],
+  "strategy": [
+   {
+    "failure": "Don't understand the 5 forces shaping industry profitability",
+    "book": "Competitive Strategy (Porter)"
+   },
+   {
+    "failure": "Entering an industry with no barriers to entry — margin erosion inevitable",
+    "book": "7 Powers (Helmer)"
+   },
+   {
+    "failure": "Ignoring substitutes — competing only against direct rivals",
+    "book": "Competitive Strategy (Porter)"
+   },
+   {
+    "failure": "Don't know supplier/customer power dynamics in own value chain",
+    "book": "Competitive Strategy (Porter)"
+   },
+   {
+    "failure": "No systematic competitor tracking — rely on anecdotes",
+    "book": "Blue Ocean Strategy (Kim & Mauborgne)"
+   },
+   {
+    "failure": "Competitor analysis is a one-time exercise, not ongoing",
+    "book": "Playing to Win (Lafley & Martin)"
+   },
+   {
+    "failure": "Only track direct competitors — miss adjacent/new entrants",
+    "book": "The Innovator's Dilemma (Christensen)"
+   },
+   {
+    "failure": "TAM inflated by including customers who won't buy",
+    "book": "Crossing the Chasm (Moore)"
+   },
+   {
+    "failure": "No bottoms-up market sizing — only top-down analyst reports",
+    "book": "Disciplined Entrepreneurship (Aulet)"
+   },
+   {
+    "failure": "Addressable market is real but too small to build a venture-scale business",
+    "book": "Zero to One (Thiel)"
+   },
+   {
+    "failure": "Competing in an existing category without differentiation — price war inevitable",
+    "book": "Positioning (Ries & Trout)"
+   },
+   {
+    "failure": "No category creation — being compared to incumbents on their terms",
+    "book": "Play Bigger (Ramadan)"
+   }
+  ],
+  "product": [
+   {
+    "failure": "Building before validating the problem exists",
+    "book": "The Mom Test (Fitzpatrick)"
+   },
+   {
+    "failure": "Solving a vitamin problem, not a painkiller problem",
+    "book": "The Mom Test (Fitzpatrick)"
+   },
+   {
+    "failure": "Problem validated with friends/family who won't be honest",
+    "book": "The Mom Test (Fitzpatrick)"
+   },
+   {
+    "failure": "Not understanding that 'I would buy that' ≠ an actual purchase",
+    "book": "The Right It (Savoia)"
+   },
+   {
+    "failure": "Asking 'would you use this?' instead of 'when did you last try to solve this?'",
+    "book": "The Mom Test (Fitzpatrick)"
+   },
+   {
+    "failure": "Interviewing the wrong persona — not the economic buyer or end user",
+    "book": "Competing Against Luck (Christensen)"
+   },
+   {
+    "failure": "Talking to customers once at the start, never again",
+    "book": "Continuous Discovery Habits (Torres)"
+   },
+   {
+    "failure": "Designing for personas, not the job the customer is hiring the product for",
+    "book": "Competing Against Luck (Christensen)"
+   },
+   {
+    "failure": "Don't know what customers were 'firing' before using your product",
+    "book": "Competing Against Luck (Christensen)"
+   },
+   {
+    "failure": "Product competes against 'doing nothing' and loses",
+    "book": "Competing Against Luck (Christensen)"
+   },
+   {
+    "failure": "MVP is too polished — months spent perfecting an unvalidated feature",
+    "book": "The Lean Startup (Ries)"
+   },
+   {
+    "failure": "MVP is too crude — doesn't demonstrate the core value prop",
+    "book": "Sprint (Knapp)"
+   }
+  ],
+  "marketing": [
+   {
+    "failure": "No ICP — 'anyone who can benefit' which means no one specifically",
+    "book": "Positioning (Ries & Trout)"
+   },
+   {
+    "failure": "ICP defined by demographics, not behavior/jobs-to-be-done",
+    "book": "Competing Against Luck (Christensen)"
+   },
+   {
+    "failure": "ICP changes every quarter because no one sticks with a bet long enough",
+    "book": "22 Immutable Laws of Marketing (Ries & Trout)"
+   },
+   {
+    "failure": "Same message sent to all segments — nothing resonates",
+    "book": "This Is Marketing (Godin)"
+   },
+   {
+    "failure": "Segments too small to build a real business on",
+    "book": "Crossing the Chasm (Moore)"
+   },
+   {
+    "failure": "Not segmenting by behavior (usage, spend, intent) — only by firmographics",
+    "book": "How Brands Grow (Sharp)"
+   },
+   {
+    "failure": "No mapped buyer journey — content created randomly",
+    "book": "Building a StoryBrand (Miller)"
+   },
+   {
+    "failure": "Journey is about the company, not the customer's internal struggle",
+    "book": "Building a StoryBrand (Miller)"
+   },
+   {
+    "failure": "Homepage headline is a tagline, not a value proposition",
+    "book": "Building a StoryBrand (Miller)"
+   },
+   {
+    "failure": "Message describes what the product IS, not what the customer BECOMES",
+    "book": "Building a StoryBrand (Miller)"
+   },
+   {
+    "failure": "Jargon and buzzwords — no human would say this out loud",
+    "book": "Made to Stick (Heath)"
+   },
+   {
+    "failure": "Company is the hero of the story, not the guide",
+    "book": "Building a StoryBrand (Miller)"
+   }
+  ],
+  "sales": [
+   {
+    "failure": "No defined sales stages — pipeline is a list of names with gut-level estimates",
+    "book": "Predictable Revenue (Ross)"
+   },
+   {
+    "failure": "Pipeline is inflated with 'good conversations' — no qualification criteria",
+    "book": "SPIN Selling (Rackham)"
+   },
+   {
+    "failure": "No pipeline coverage ratio — don't know how much pipeline is needed for target",
+    "book": "Predictable Revenue (Ross)"
+   },
+   {
+    "failure": "No qualification framework — chasing every lead regardless of fit",
+    "book": "The Challenger Sale (Dixon & Adamson)"
+   },
+   {
+    "failure": "Sales team qualifies on budget only, ignores need/authority/timeline",
+    "book": "SPIN Selling (Rackham)"
+   },
+   {
+    "failure": "Sales reps spend 70% of time on deals that never close",
+    "book": "Predictable Revenue (Ross)"
+   },
+   {
+    "failure": "Using product-pitch approach for complex B2B sales — needs SPIN/diagnostic",
+    "book": "SPIN Selling (Rackham)"
+   },
+   {
+    "failure": "No common methodology — every rep sells differently, no repeatable process",
+    "book": "The Challenger Sale (Dixon & Adamson)"
+   },
+   {
+    "failure": "Reps talk features when they should be diagnosing problems",
+    "book": "SPIN Selling (Rackham)"
+   },
+   {
+    "failure": "Demos aren't converting — product looks great but no urgency to buy",
+    "book": "The Challenger Sale (Dixon & Adamson)"
+   },
+   {
+    "failure": "No competitive battlecard — reps lose deals they should win",
+    "book": "The Challenger Sale (Dixon & Adamson)"
+   },
+   {
+    "failure": "Deals lost to 'no decision' — can't create urgency or overcome status quo bias",
+    "book": "The JOLT Effect (Dixon & McKenna)"
+   }
+  ],
+  "finance": [
+   {
+    "failure": "Don't know runway in months — operating on bank balance, not burn rate",
+    "book": "Venture Deals (Feld & Mendelson)"
+   },
+   {
+    "failure": "Runway under 6 months with no fundraising plan",
+    "book": "Venture Deals (Feld & Mendelson)"
+   },
+   {
+    "failure": "Cash flows not forecast — surprised by payroll",
+    "book": "Financial Intelligence (Berman & Knight)"
+   },
+   {
+    "failure": "Don't know CAC, LTV, or payback period",
+    "book": "Lean Analytics (Croll & Yoskovitz)"
+   },
+   {
+    "failure": "LTV/CAC ratio under 3:1 — each dollar of sales/marketing loses money",
+    "book": "Lean Analytics (Croll & Yoskovitz)"
+   },
+   {
+    "failure": "Gross margin below 50% — can't afford sales & marketing at scale",
+    "book": "The Personal MBA (Kaufman)"
+   },
+   {
+    "failure": "No budget — spending as requests come in",
+    "book": "Financial Intelligence (Berman & Knight)"
+   },
+   {
+    "failure": "Budget built on hopes, not pipeline coverage or retention rates",
+    "book": "Financial Intelligence (Berman & Knight)"
+   },
+   {
+    "failure": "Zero-based budgeting never done — inertia keeps dead costs alive",
+    "book": "The Personal MBA (Kaufman)"
+   },
+   {
+    "failure": "Raising too much or too little — not matching round to milestones",
+    "book": "Venture Deals (Feld & Mendelson)"
+   },
+   {
+    "failure": "Raising from the wrong type of investor for the stage",
+    "book": "Venture Deals (Feld & Mendelson)"
+   },
+   {
+    "failure": "Fundraising is a full-time job for 3-6 months — company stalls",
+    "book": "The Hard Thing About Hard Things (Horowitz)"
+   }
+  ],
+  "operations": [
+   {
+    "failure": "Critical processes live only in key people's heads — single point of failure",
+    "book": "The E-Myth Revisited (Gerber)"
+   },
+   {
+    "failure": "No SOPs — every time a task is done, it's done differently",
+    "book": "The E-Myth Revisited (Gerber)"
+   },
+   {
+    "failure": "Processes documented once then never updated — reality has drifted",
+    "book": "The 4 Disciplines of Execution"
+   },
+   {
+    "failure": "Founder is the bottleneck — everything needs their approval",
+    "book": "The E-Myth Revisited (Gerber)"
+   },
+   {
+    "failure": "No constraint analysis — don't know what's limiting throughput",
+    "book": "The Goal (Goldratt)"
+   },
+   {
+    "failure": "Hiring to fix bottlenecks without first fixing the process",
+    "book": "The Goal (Goldratt)"
+   },
+   {
+    "failure": "Manual data entry across multiple systems — error-prone and slow",
+    "book": "The Personal MBA (Kaufman)"
+   },
+   {
+    "failure": "Automating a broken process — digitizing chaos doesn't fix it",
+    "book": "The E-Myth Revisited (Gerber)"
+   },
+   {
+    "failure": "Single supplier dependency — one failure stops the business",
+    "book": "The Black Swan (Taleb)"
+   },
+   {
+    "failure": "No vendor scorecard — quality issues discovered by customers",
+    "book": "The Goal (Goldratt)"
+   },
+   {
+    "failure": "Race to the cheapest supplier — quality and reliability sacrificed",
+    "book": "The Black Swan (Taleb)"
+   },
+   {
+    "failure": "Stockouts — losing sales because inventory wasn't reordered",
+    "book": "The Goal (Goldratt)"
+   }
+  ],
+  "hr": [
+   {
+    "failure": "Hiring before defining what success looks like in the role",
+    "book": "Who (Smart & Street)"
+   },
+   {
+    "failure": "Job description is a wishlist, not a set of 3-5 outcomes the person must achieve",
+    "book": "Who (Smart & Street)"
+   },
+   {
+    "failure": "Hiring a generalist when you need a specialist, or vice versa",
+    "book": "High Output Management (Grove)"
+   },
+   {
+    "failure": "Only hiring from your network — limited candidate pool",
+    "book": "Who (Smart & Street)"
+   },
+   {
+    "failure": "Passive sourcing only — no active outreach to the best people",
+    "book": "Who (Smart & Street)"
+   },
+   {
+    "failure": "Interviews are unstructured conversations — no scorecard, no consistency",
+    "book": "Who (Smart & Street)"
+   },
+   {
+    "failure": "Hiring based on likability, not demonstrated ability to deliver the outcomes",
+    "book": "Who (Smart & Street)"
+   },
+   {
+    "failure": "No work sample or trial project — hire on interview performance alone",
+    "book": "Work Rules! (Bock)"
+   },
+   {
+    "failure": "Skipping reference checks — the 'we need them now' trap",
+    "book": "Who (Smart & Street)"
+   },
+   {
+    "failure": "References are cherry-picked by the candidate — not back-channeled",
+    "book": "Who (Smart & Street)"
+   },
+   {
+    "failure": "No structured onboarding — new hire gets a laptop and a 'figure it out'",
+    "book": "The First 90 Days (Watkins)"
+   },
+   {
+    "failure": "New hire productivity delayed by months — cost of poor onboarding invisible",
+    "book": "Work Rules! (Bock)"
+   }
+  ],
+  "customer_success": [
+   {
+    "failure": "Customers take 3+ months to see value — churn before they get there",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "Onboarding is a feature tour, not guided to the customer's specific outcome",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "No defined 'aha moment' — don't know when a customer is actually onboarded",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "No implementation playbook — every deployment is bespoke chaos",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "Data migration breaks — customer starts with corrupted data, never recovers trust",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "No early warning signals — churn is a surprise every time",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "Not tracking health score — don't know which accounts are at risk",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "Churn is measured; churn reason is not — fixing symptoms, not causes",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "Renewal conversation starts 30 days before expiry — too late to demonstrate value",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "Renewal is a sales transaction, not a success milestone",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "No save playbook — every at-risk account gets ad-hoc treatment",
+    "book": "Customer Success (Mehta)"
+   },
+   {
+    "failure": "Escalation to exec doesn't close the gap — they can't fix the product",
+    "book": "Customer Success (Mehta)"
+   }
+  ],
+  "technology": [
+   {
+    "failure": "No architecture decisions recorded — why was this choice made?",
+    "book": "Designing Data-Intensive Applications (Kleppmann)"
+   },
+   {
+    "failure": "Monolith that should have been split 6 months ago — velocity collapsed",
+    "book": "Building Microservices (Newman)"
+   },
+   {
+    "failure": "Premature microservices — added complexity without the scale to justify it",
+    "book": "Building Microservices (Newman)"
+   },
+   {
+    "failure": "No tech debt tracking — it's invisible until everything breaks",
+    "book": "Accelerate (Forsgren)"
+   },
+   {
+    "failure": "Codebase has no tests — every change is Russian roulette",
+    "book": "Working Effectively with Legacy Code (Feathers)"
+   },
+   {
+    "failure": "Refactoring never budgeted — always deprioritized for new features",
+    "book": "Accelerate (Forsgren)"
+   },
+   {
+    "failure": "Manual deployments — releases are stressful all-day events",
+    "book": "Accelerate (Forsgren)"
+   },
+   {
+    "failure": "Deploy frequency under 1/week — can't ship fixes fast",
+    "book": "Accelerate (Forsgren)"
+   },
+   {
+    "failure": "No on-call rotation — founder fixing things at 3am",
+    "book": "Site Reliability Engineering (Google)"
+   },
+   {
+    "failure": "Incidents are fixed but never post-mortemed — same issues recur",
+    "book": "Site Reliability Engineering (Google)"
+   },
+   {
+    "failure": "No data warehouse — analytics run on production DB, slowing everything",
+    "book": "Designing Data-Intensive Applications (Kleppmann)"
+   },
+   {
+    "failure": "Data is siloed — marketing can't see product data, sales can't see usage",
+    "book": "The Data Warehouse Toolkit (Kimball)"
+   }
+  ],
+  "data": [
+   {
+    "failure": "Tracking everything, understanding nothing — dashboard overload",
+    "book": "Lean Analytics (Croll & Yoskovitz)"
+   },
+   {
+    "failure": "KPIs are lagging indicators (revenue) not leading indicators (pipeline created)",
+    "book": "Lean Analytics (Croll & Yoskovitz)"
+   },
+   {
+    "failure": "Vanity metrics celebrated (downloads, signups) while business metrics ignored (activation, retention)",
+    "book": "Lean Analytics (Croll & Yoskovitz)"
+   },
+   {
+    "failure": "Every team tracks different definitions of the same metric — 'active user' means 5 things",
+    "book": "Lean Analytics (Croll & Yoskovitz)"
+   },
+   {
+    "failure": "No single source of truth — 3 dashboards, 3 different revenue numbers",
+    "book": "Lean Analytics (Croll & Yoskovitz)"
+   },
+   {
+    "failure": "Decisions made on gut feel — data exists but not consulted",
+    "book": "Superforecasting (Tetlock)"
+   },
+   {
+    "failure": "Decisions made on a single data point, not a trend — month-over-month noise mistaken for signal",
+    "book": "The Signal and the Noise (Silver)"
+   },
+   {
+    "failure": "Analysis paralysis — more data requested instead of making the call",
+    "book": "Decisive (Heath)"
+   },
+   {
+    "failure": "No A/B testing — every change is 'we think this is better'",
+    "book": "Trustworthy Online Controlled Experiments (Kohavi)"
+   },
+   {
+    "failure": "A/B tests run but never reach statistical significance before shipping",
+    "book": "Trustworthy Online Controlled Experiments (Kohavi)"
+   },
+   {
+    "failure": "Board deck takes 2 weeks to produce — data isn't readily available",
+    "book": "Lean Analytics (Croll & Yoskovitz)"
+   },
+   {
+    "failure": "Monthly reports are backward-looking only — no forward indicators",
+    "book": "Lean Analytics (Croll & Yoskovitz)"
+   }
+  ],
+  "brand": [
+   {
+    "failure": "Brand = logo + colors. Nobody on the team can articulate what the brand STANDS FOR.",
+    "book": "22 Immutable Laws of Marketing (Ries & Trout)"
+   },
+   {
+    "failure": "Brand identity changes with every redesign — no consistent equity built",
+    "book": "How Brands Grow (Sharp)"
+   },
+   {
+    "failure": "Marketing promises are bigger than what the product delivers — trust destroyed on first use",
+    "book": "This Is Marketing (Godin)"
+   },
+   {
+    "failure": "Brand promise not defined — customers have no expectation, so no reason to choose you",
+    "book": "This Is Marketing (Godin)"
+   },
+   {
+    "failure": "No recognizable logos on the website — prospects think the product is unproven",
+    "book": "Influence (Cialdini)"
+   },
+   {
+    "failure": "Case studies hidden behind forms — can't build trust anonymously",
+    "book": "They Ask, You Answer (Sheridan)"
+   },
+   {
+    "failure": "Founder has no public presence — brand IS the founder in early stage",
+    "book": "Crushing It! (Vaynerchuk)"
+   },
+   {
+    "failure": "Content is generic — no original point of view, nothing to build trust around",
+    "book": "Perennial Seller (Holiday)"
+   },
+   {
+    "failure": "No crisis plan — when something breaks, response is reactive and damaging",
+    "book": "The Speed of Trust (Covey Jr.)"
+   },
+   {
+    "failure": "Data breach / outage communicated late — customers find out on Twitter first",
+    "book": "The Speed of Trust (Covey Jr.)"
+   }
+  ],
+  "partnerships": [
+   {
+    "failure": "Partnerships are random — whoever shows up, not whoever creates the most leverage",
+    "book": "Business Model Generation (Osterwalder)"
+   },
+   {
+    "failure": "Partnering with companies that have misaligned incentives — they win when you lose",
+    "book": "Poor Charlie's Almanack (Munger)"
+   },
+   {
+    "failure": "Partner gives 10% and takes 80% of the economics — bad deal hidden in bad math",
+    "book": "Poor Charlie's Almanack (Munger)"
+   },
+   {
+    "failure": "Revenue share doesn't cover the cost of serving the partner's customers",
+    "book": "Business Model Generation (Osterwalder)"
+   },
+   {
+    "failure": "Resellers signed but never sell — no enablement, no incentive to push your product",
+    "book": "Crossing the Chasm (Moore)"
+   },
+   {
+    "failure": "Channel conflict — direct sales team competes with partners",
+    "book": "The Sales Acceleration Formula (Roberge)"
+   },
+   {
+    "failure": "Integration is shallow — doesn't provide enough value for either customer base",
+    "book": "Platform Scale (Choudary)"
+   }
+  ],
+  "growth": [
+   {
+    "failure": "No defined growth model — don't know whether growth is viral, paid, content, or sales-driven",
+    "book": "Traction (Weinberg & Mares)"
+   },
+   {
+    "failure": "Growth is linear when it should be compounding — no flywheel designed",
+    "book": "Good to Great (Collins)"
+   },
+   {
+    "failure": "No viral/referral loop — every customer acquired through paid channels",
+    "book": "Viral Loop (Penenberg)"
+   },
+   {
+    "failure": "Paid acquisition scales but retention doesn't — growing a leaking bucket",
+    "book": "The Cold Start Problem (Chen)"
+   },
+   {
+    "failure": "Entering new country as if it's the same as home market — localization ignored",
+    "book": "Playing to Win (Lafley & Martin)"
+   },
+   {
+    "failure": "Expanding to too many countries at once — spread thin, win nowhere",
+    "book": "Good Strategy/Bad Strategy (Rumelt)"
+   },
+   {
+    "failure": "Moving upmarket without the product/process maturity to serve enterprise",
+    "book": "Crossing the Chasm (Moore)"
+   },
+   {
+    "failure": "Moving downmarket cannibalizes the core business",
+    "book": "The Innovator's Dilemma (Christensen)"
+   },
+   {
+    "failure": "Product can't be tried without talking to sales — PLG impossible",
+    "book": "Product-Led Growth (Bush)"
+   },
+   {
+    "failure": "Free tier cannibalizes paid — conversion rate too low to sustain",
+    "book": "Product-Led Growth (Bush)"
+   },
+   {
+    "failure": "Signups are high, activation is 5% — product doesn't deliver the 'aha' fast enough",
+    "book": "Product-Led Growth (Bush)"
+   }
+  ],
+  "leadership": [
+   {
+    "failure": "Founder burnout — working 80-hour weeks with no end in sight",
+    "book": "The Hard Thing About Hard Things (Horowitz)"
+   },
+   {
+    "failure": "Founder is the bottleneck — every decision routes through them",
+    "book": "The E-Myth Revisited (Gerber)"
+   },
+   {
+    "failure": "No advisor/peer group — founder has nobody to be honest with",
+    "book": "The Hard Thing About Hard Things (Horowitz)"
+   },
+   {
+    "failure": "Founder avoids the hardest conversation — letting go of a co-founder or key exec",
+    "book": "The Hard Thing About Hard Things (Horowitz)"
+   },
+   {
+    "failure": "Decision paralysis — waiting for perfect information that will never arrive",
+    "book": "Decisive (Heath)"
+   },
+   {
+    "failure": "Reversible decisions treated as irreversible — massive time wasted",
+    "book": "Decisive (Heath)"
+   },
+   {
+    "failure": "Decisions not written down — same debates happen every week",
+    "book": "Principles (Dalio)"
+   },
+   {
+    "failure": "Founder doing $15/hour work while $150/hour decisions go unmade",
+    "book": "The E-Myth Revisited (Gerber)"
+   },
+   {
+    "failure": "Calendar driven by others — founder has no maker time",
+    "book": "High Output Management (Grove)"
+   },
+   {
+    "failure": "Working IN the business, not ON the business",
+    "book": "The E-Myth Revisited (Gerber)"
+   },
+   {
+    "failure": "Micromanaging — founder reviews every code commit / email / slide",
+    "book": "High Output Management (Grove)"
+   },
+   {
+    "failure": "Abdicating, not delegating — 'you figure it out' without context/support",
+    "book": "High Output Management (Grove)"
+   }
+  ]
+ }
+}

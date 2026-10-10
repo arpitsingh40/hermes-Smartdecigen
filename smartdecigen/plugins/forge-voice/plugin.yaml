@@ -1,0 +1,5 @@
+name: forge-voice
+version: "0.1.0"
+description: "The operator persona, registered as a cache-safe system prompt section (position after_memory). Rendered once per session and frozen, so Hermes' prompt-caching invariant holds. Carries who the operator is, how they speak, lead-with-value, honor-the-request, predict-the-outcome, and state-what-would-change-your-mind."
+author: "FORGE"
+provides_hooks: []

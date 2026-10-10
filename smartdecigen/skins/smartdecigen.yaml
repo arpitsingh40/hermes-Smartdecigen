@@ -1,0 +1,31 @@
+name: smartdecigen
+description: "SmartDecigen — Business Execution OS. Deep-teal operator palette with an operator banner and boxed response label."
+colors:
+  # Deep teal / ink — reads as a control plane, not a chatbot.
+  banner_border: "#1F6F6B"
+  banner_title: "#2F8F8A"
+  banner_accent: "#4FB3AD"
+  banner_dim: "#5A6B70"
+  banner_text: "#DCE7E6"
+  ui_accent: "#2F8F8A"
+  response_border: "#2F8F8A"
+spinner:
+  waiting_faces: ["(▣)", "(◈)", "(⬡)"]
+  thinking_faces: ["(▣)", "(◈)", "(⧗)"]
+  thinking_verbs:
+    - "diagnosing"
+    - "tracing root cause"
+    - "applying lenses"
+    - "reading the graph"
+    - "planning the loop"
+    - "measuring"
+    - "executing"
+  wings:
+    - ["⟦▣", "▣⟧"]
+    - ["⟦◈", "◈⟧"]
+branding:
+  agent_name: "SmartDecigen"
+  welcome: "SmartDecigen — Business Execution OS. State it, diagnose it, move."
+  response_label: " ▣ SmartDecigen "
+  prompt_symbol: "▣"
+tool_prefix: "▏"

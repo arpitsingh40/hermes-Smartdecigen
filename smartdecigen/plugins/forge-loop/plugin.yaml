@@ -1,0 +1,8 @@
+name: forge-loop
+version: "0.1.0"
+description: "The autonomous business loop: reads state, decides, acts, measures, reports. Driven by Hermes cron; the agent is the loop brain so the reasoning and growth layers apply to every iteration."
+author: "FORGE"
+provides_tools:
+  - forge_loop_state
+  - forge_loop_complete_action
+  - forge_loop_record_run
