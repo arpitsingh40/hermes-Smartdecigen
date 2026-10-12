@@ -70,7 +70,7 @@ def _enable_default_plugins() -> None:
         try:
             plugins_cmd._activate_key(plugins_cmd._resolve_plugin_key(name) or name, enable=True)
         except Exception as exc:
-            logger.warning("SmartDecigen: could not enable plugin %s: %s", name, exc)
+            logger.warning("SmartDecigen: could not enable plugin %s: %s", name, exc, exc_info=True)
 
 
 def _select_skin() -> None:
@@ -95,7 +95,7 @@ def ensure_smartdecigen_layer(home: Path | None = None) -> bool:
         marker = home / MARKER_NAME
         digest = layer_digest()
         first_run = not marker.is_file()
-        if not first_run and marker.read_text(encoding="utf-8").strip() == digest:
+        if not first_run and marker.read_text(encoding="utf-8-sig").strip() == digest:
             return False
         install_layer_files(home)
         if first_run:
@@ -104,7 +104,7 @@ def ensure_smartdecigen_layer(home: Path | None = None) -> bool:
         marker.write_text(digest, encoding="utf-8")
         return True
     except Exception as exc:
-        logger.warning("SmartDecigen: layer provisioning failed: %s", exc)
+        logger.warning("SmartDecigen: layer provisioning failed: %s", exc, exc_info=True)
         return False
 
 
