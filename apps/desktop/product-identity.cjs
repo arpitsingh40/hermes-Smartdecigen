@@ -46,11 +46,9 @@ const canary = /\+canary\.20\d{6}T\d{6}Z$/.test(process.env.HERMES_PAYLOAD_TAG |
 // seven-character commit suffix also names the CLI and fits MSIX's name cap.
 const buildCommitEnv = process.env.HERMES_BUILD_COMMIT || ''
 const buildCommit = /^[a-f0-9]{40}$/.test(buildCommitEnv) ? buildCommitEnv.slice(0, 7) : null
-const displayName = buildCommit
-  ? `${name.display} ${buildCommit}`
-  : canary
-    ? `${name.display} Canary`
-    : name.display
+// SmartDecigen ships commit builds to end users, so the window/shortcut name stays clean; the
+// commit suffix still isolates appId, CLI and package identity below.
+const displayName = canary ? `${name.display} Canary` : name.display
 
 const kebabSuffix = buildCommit ? `-${buildCommit}` : canary ? '-canary' : ''
 const pascalSuffix = buildCommit ? `Commit${buildCommit}` : canary ? 'Canary' : ''

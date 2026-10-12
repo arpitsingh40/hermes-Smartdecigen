@@ -1,0 +1,94 @@
+name: SmartDecigen Windows installer
+
+# Builds SmartDecigen-Setup.exe: the bundled desktop app (Electron + Python runtime + Hermes +
+# SmartDecigen layer) wrapped in a per-user Inno Setup installer. Pushing a `smartdecigen-v*`
+# tag publishes it as a GitHub Release; every other run uploads it as a workflow artifact.
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['smartdecigen-v*']
+  pull_request:
+    paths:
+      - 'smartdecigen/**'
+      - 'apps/desktop/**'
+      - 'hermes_cli/smartdecigen_setup.py'
+      - 'scripts/bundles/**'
+      - '.github/workflows/smartdecigen-windows.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: smartdecigen-windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  installer:
+    runs-on: windows-latest
+    timeout-minutes: 300
+    env:
+      HERMES_DESKTOP_VARIANT: bundled
+      HERMES_BUILD_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}\.cache\electron-builder
+      PYTHONUTF8: '1'
+    steps:
+      - name: Exclude build paths from Defender scanning
+        shell: powershell
+        run: |
+          foreach ($p in @($env:GITHUB_WORKSPACE, $env:RUNNER_TEMP)) {
+            try { Add-MpPreference -ExclusionPath $p } catch { Write-Host "Defender exclusion skipped for $p" }
+          }
+          try { Set-MpPreference -DisableRealtimeMonitoring $true } catch { Write-Host "Realtime monitoring left on" }
+
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v7.0.1
+        with:
+          ref: ${{ env.HERMES_BUILD_COMMIT }}
+          fetch-depth: 1
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6
+        with:
+          node-version-file: .nvmrc
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Build the bundled desktop app
+        shell: powershell
+        run: |
+          python scripts/bundles/desktop.py --commit "$env:HERMES_BUILD_COMMIT" --variant bundled
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Package SmartDecigen-Setup.exe
+        id: package
+        shell: powershell
+        run: |
+          $unpacked = Get-ChildItem -Path apps\desktop\release, .build -Recurse -Directory -Filter win-unpacked -ErrorAction SilentlyContinue |
+            Select-Object -First 1
+          if (-not $unpacked) { throw 'win-unpacked output not found' }
+          $exe = "hermes-$($env:HERMES_BUILD_COMMIT.Substring(0, 7)).exe"
+          if (-not (Test-Path (Join-Path $unpacked.FullName $exe))) { throw "$exe missing from $($unpacked.FullName)" }
+          $version = if ($env:GITHUB_REF_NAME -like 'smartdecigen-v*') { $env:GITHUB_REF_NAME -replace '^smartdecigen-v', '' } else { "0.0.$env:GITHUB_RUN_NUMBER" }
+          $iscc = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe'
+          if (-not (Test-Path $iscc)) {
+            choco install innosetup -y --no-progress
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          $out = Join-Path $env:RUNNER_TEMP 'installer'
+          & $iscc "/DAppVersion=$version" "/DSourceDir=$($unpacked.FullName)" "/DAppExe=$exe" "/DOutputDir=$out" apps\desktop\installer\SmartDecigen.iss
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "setup=$out\SmartDecigen-Setup.exe" >> $env:GITHUB_OUTPUT
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: SmartDecigen-Setup
+          path: ${{ steps.package.outputs.setup }}
+          retention-days: 14
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/smartdecigen-v')
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" "${{ steps.package.outputs.setup }}" --title "SmartDecigen $GITHUB_REF_NAME" --generate-notes

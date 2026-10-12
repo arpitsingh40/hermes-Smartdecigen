@@ -2746,6 +2746,8 @@ def cmd_dashboard(args):
     if _headless_backend:
         from hermes_cli.observability.shared_metrics_process import begin_process
         begin_process("serve")
+        from hermes_cli.smartdecigen_setup import ensure_smartdecigen_layer
+        ensure_smartdecigen_layer()
 
     # The in-browser Chat tab (embedded TUI over PTY/WebSocket) is always
     # available — desktop and dashboard both rely on `/api/ws` + `/api/pty`.
