@@ -22,7 +22,7 @@ CASES = [
     ("we are in crisis and need to survive, emergency runway", True),
     ("our CAC is too high, what channel should we use", True),
     # ordinary agent work — must inject nothing
-    ("read the file at /tmp/x", False),
+    ("read the file at notes/x.txt", False),
     ("git status", False),
     ("yes please", False),
     ("list the files in this directory", False),

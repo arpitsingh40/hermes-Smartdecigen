@@ -44,7 +44,7 @@ python integration_check.py                 # prints the real injected block
 | `we already invested 5 lakh in this and I know it will work` | injects `money allocation` + Kahneman/Munger/Taleb |
 | `should we hire a second salesperson or a cofounder` | injects `people team` + lenses |
 | `we are in crisis and need to survive, emergency runway` | injects `crisis survival` + lenses |
-| `read the file at /tmp/x` | **nothing** |
+| `read the file at notes/x.txt` | **nothing** |
 | `git status` | **nothing** |
 | `convert this to json` | **nothing** |
 
