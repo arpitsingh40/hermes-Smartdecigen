@@ -2645,7 +2645,11 @@ def _dashboard_prepare_runtime(args, headless_backend) -> bool:
     # start_server's fail-closed gate check. Argparse setup skips discovery
     # for built-in subcommands (~500ms), but the dashboard's server-side
     # runtime depends on plugin-registered providers (image_gen, web,
-    # dashboard_auth, …).
+    # dashboard_auth, …). SmartDecigen provisioning runs first (desktop-owned
+    # backends only) so a first launch loads the freshly enabled plugins.
+    if headless_backend and _is_desktop_owned_backend():
+        from hermes_cli.smartdecigen_setup import ensure_smartdecigen_layer
+        ensure_smartdecigen_layer()
     try:
         from hermes_cli.plugins import discover_plugins
         discover_plugins()
@@ -2725,8 +2729,6 @@ def cmd_dashboard(args):
     if _headless_backend:
         from hermes_cli.observability.shared_metrics_process import begin_process
         begin_process("serve")
-        from hermes_cli.smartdecigen_setup import ensure_smartdecigen_layer
-        ensure_smartdecigen_layer()
 
     # The in-browser Chat tab (embedded TUI over PTY/WebSocket) is always
     # available — desktop and dashboard both rely on `/api/ws` + `/api/pty`.

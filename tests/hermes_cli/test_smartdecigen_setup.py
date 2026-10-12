@@ -35,6 +35,39 @@ def test_later_runs_keep_user_choices_and_only_refresh_changed_files():
     assert (home / "plugins" / "forge-brain" / "plugin.yaml").is_file()
 
 
+def test_failed_default_admission_is_retried_until_it_succeeds():
+    home = get_hermes_home()
+
+    def reject_voice(key, enable):
+        if key.endswith("forge-voice"):
+            raise RuntimeError("dependency resolution unavailable")
+        return True
+
+    with mock.patch("hermes_cli.plugins_cmd._activate_key", side_effect=reject_voice):
+        assert setup.ensure_smartdecigen_layer() is True
+    assert (home / setup.PENDING_NAME).read_text(encoding="utf-8-sig").split() == ["forge-voice"]
+
+    with mock.patch("hermes_cli.plugins_cmd._activate_key", return_value=True) as activate:
+        assert setup.ensure_smartdecigen_layer() is True
+        assert [c.args[0].rsplit("/", 1)[-1] for c in activate.call_args_list] == ["forge-voice"]
+        assert not (home / setup.PENDING_NAME).exists()
+        assert setup.ensure_smartdecigen_layer() is False
+        assert activate.call_count == 1
+
+
+def test_pending_retry_respects_a_later_user_disable():
+    home = get_hermes_home()
+    with mock.patch("hermes_cli.plugins_cmd._activate_key", return_value=False):
+        setup.ensure_smartdecigen_layer()
+    assert set((home / setup.PENDING_NAME).read_text(encoding="utf-8-sig").split()) == set(setup.DEFAULT_PLUGINS)
+    with mock.patch.object(setup, "load_config", create=True), \
+         mock.patch("hermes_cli.config.load_config",
+                    return_value={"plugins": {"disabled": list(setup.DEFAULT_PLUGINS)}}), \
+         mock.patch("hermes_cli.plugins_cmd._activate_key") as activate:
+        assert setup.ensure_smartdecigen_layer() is False
+    activate.assert_not_called()
+
+
 def test_failures_never_escape():
     with mock.patch.object(setup, "install_layer_files", side_effect=OSError("read-only")):
         assert setup.ensure_smartdecigen_layer() is False

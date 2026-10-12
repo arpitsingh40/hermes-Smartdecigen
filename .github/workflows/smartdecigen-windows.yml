@@ -39,7 +39,6 @@ jobs:
           foreach ($p in @($env:GITHUB_WORKSPACE, $env:RUNNER_TEMP)) {
             try { Add-MpPreference -ExclusionPath $p } catch { Write-Host "Defender exclusion skipped for $p" }
           }
-          try { Set-MpPreference -DisableRealtimeMonitoring $true } catch { Write-Host "Realtime monitoring left on" }
 
       - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v7.0.1
         with:

@@ -3,8 +3,8 @@
 Desktop users never run ``install.sh`` or ``hermes plugins enable``: the backend calls
 :func:`ensure_smartdecigen_layer` on every start. The first run copies the plugins and skin,
 enables the default plugin set through the plugin admission path and selects the skin. Later
-runs only refresh the copied files when the shipped layer changes, so a user who disables a
-plugin or picks another skin keeps that choice.
+runs only refresh the copied files when the shipped layer changes and retry default plugins whose
+first admission failed, so a user who disables a plugin or picks another skin keeps that choice.
 
 CLI users can run the same step with ``python -m hermes_cli.smartdecigen_setup``.
 """
@@ -23,6 +23,7 @@ LAYER_ROOT = Path(__file__).resolve().parent.parent / "smartdecigen"
 DEFAULT_PLUGINS = ("forge-brain", "forge-growth", "forge-voice", "forge-exec", "forge-loop")
 SKIN_NAME = "smartdecigen"
 MARKER_NAME = ".smartdecigen-layer"
+PENDING_NAME = ".smartdecigen-pending"
 _COPY_IGNORE = shutil.ignore_patterns("__pycache__", "*.pyc", "test_*.py")
 
 
@@ -63,14 +64,31 @@ def install_layer_files(home: Path, root: Path = LAYER_ROOT) -> list[str]:
     return names
 
 
-def _enable_default_plugins() -> None:
+def _enable_plugins(names: list[str]) -> list[str]:
+    """Enable *names* through the plugin admission path; returns the names that failed."""
     from hermes_cli import plugins_cmd
 
-    for name in DEFAULT_PLUGINS:
+    failed = []
+    for name in names:
         try:
-            plugins_cmd._activate_key(plugins_cmd._resolve_plugin_key(name) or name, enable=True)
+            if plugins_cmd._activate_key(plugins_cmd._resolve_plugin_key(name) or name, enable=True) is False:
+                failed.append(name)
         except Exception as exc:
             logger.warning("SmartDecigen: could not enable plugin %s: %s", name, exc, exc_info=True)
+            failed.append(name)
+    return failed
+
+
+def _pending_retries(pending_file: Path) -> list[str]:
+    """Defaults whose first-run admission failed, minus any the user has since disabled."""
+    if not pending_file.is_file():
+        return []
+    from hermes_cli.config import load_config
+
+    plugins_cfg = load_config().get("plugins") or {}
+    disabled = set(plugins_cfg.get("disabled") or ()) if isinstance(plugins_cfg, dict) else set()
+    names = pending_file.read_text(encoding="utf-8-sig").split()
+    return [n for n in names if n in DEFAULT_PLUGINS and n not in disabled]
 
 
 def _select_skin() -> None:
@@ -93,14 +111,24 @@ def ensure_smartdecigen_layer(home: Path | None = None) -> bool:
             return False
         home = home or get_hermes_home()
         marker = home / MARKER_NAME
+        pending_file = home / PENDING_NAME
         digest = layer_digest()
         first_run = not marker.is_file()
-        if not first_run and marker.read_text(encoding="utf-8-sig").strip() == digest:
+        files_current = not first_run and marker.read_text(encoding="utf-8-sig").strip() == digest
+        retry = [] if first_run else _pending_retries(pending_file)
+        if files_current and not retry:
+            if pending_file.is_file():
+                pending_file.unlink()
             return False
-        install_layer_files(home)
+        if not files_current:
+            install_layer_files(home)
+        failed = _enable_plugins(list(DEFAULT_PLUGINS) if first_run else retry)
         if first_run:
-            _enable_default_plugins()
             _select_skin()
+        if failed:
+            pending_file.write_text("\n".join(failed), encoding="utf-8")
+        elif pending_file.is_file():
+            pending_file.unlink()
         marker.write_text(digest, encoding="utf-8")
         return True
     except Exception as exc:
