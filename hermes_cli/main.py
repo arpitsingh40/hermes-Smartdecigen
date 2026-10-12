@@ -2604,28 +2604,6 @@ def _dashboard_sanitize_desktop_env(headless_backend) -> None:
         os.environ.pop("HERMES_SERVE_HEADLESS", None)
 
 
-def _require_dashboard_web_deps() -> None:
-    """Exit with the right message when the dashboard's web-server packages can't import.
-
-    A plain missing-package ImportError gets the standard repair guidance; the
-    ``DLL load failed ... _ssl`` signature of Windows Smart App Control blocking the
-    embedded runtime gets the policy guidance instead, so users stop looping on
-    repair for a block repair can never lift (#63796)."""
-    try:
-        import fastapi
-        import uvicorn
-    except ImportError as e:
-        from hermes_cli.main_dep_hints import (
-            missing_optional_deps_message,
-            smart_app_control_block_message,
-        )
-
-        print(smart_app_control_block_message(e) or missing_optional_deps_message(
-            "dashboard", "its web-server packages (fastapi, uvicorn)", "all"))
-        print(f"Details: {e}")
-        sys.exit(1)
-
-
 def _dashboard_prepare_runtime(args, headless_backend) -> bool:
     """Deps check, skills seed, terminal env bridge, plugins, MCP discovery.
 
@@ -2639,7 +2617,8 @@ def _dashboard_prepare_runtime(args, headless_backend) -> bool:
     except Exception:
         pass
 
-    _require_dashboard_web_deps()
+    from hermes_cli.main_dep_hints import require_dashboard_web_deps
+    require_dashboard_web_deps()
 
     # Seed bundled skills on first dashboard launch so the desktop GUI's
     # skills picker / agent skill discovery sees the bundled library.
@@ -2666,7 +2645,11 @@ def _dashboard_prepare_runtime(args, headless_backend) -> bool:
     # start_server's fail-closed gate check. Argparse setup skips discovery
     # for built-in subcommands (~500ms), but the dashboard's server-side
     # runtime depends on plugin-registered providers (image_gen, web,
-    # dashboard_auth, …).
+    # dashboard_auth, …). SmartDecigen provisioning runs first (desktop-owned
+    # backends only) so a first launch loads the freshly enabled plugins.
+    if headless_backend and _is_desktop_owned_backend():
+        from hermes_cli.smartdecigen_setup import ensure_smartdecigen_layer
+        ensure_smartdecigen_layer()
     try:
         from hermes_cli.plugins import discover_plugins
         discover_plugins()

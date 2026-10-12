@@ -11,8 +11,7 @@ import builtins
 
 import pytest
 
-from hermes_cli import main
-from hermes_cli.main_dep_hints import smart_app_control_block_message
+from hermes_cli.main_dep_hints import require_dashboard_web_deps, smart_app_control_block_message
 
 SAC_ERROR = ImportError(
     "DLL load failed while importing _ssl: "
@@ -50,7 +49,7 @@ def test_smart_app_control_block_message_ignores_other_errors():
 def test_dashboard_deps_check_names_the_policy_block(monkeypatch, capsys):
     monkeypatch.setattr(builtins, "__import__", _raise_for({"fastapi"}, SAC_ERROR))
     with pytest.raises(SystemExit) as exc:
-        main._require_dashboard_web_deps()
+        require_dashboard_web_deps()
     assert exc.value.code == 1
     output = capsys.readouterr().out
     assert "Smart App Control" in output
@@ -63,7 +62,7 @@ def test_dashboard_deps_check_keeps_repair_guidance_for_plain_missing_deps(
     monkeypatch.setattr(
         builtins, "__import__", _raise_for({"fastapi"}, ImportError("No module named 'fastapi'")))
     with pytest.raises(SystemExit) as exc:
-        main._require_dashboard_web_deps()
+        require_dashboard_web_deps()
     assert exc.value.code == 1
     output = capsys.readouterr().out
     assert "hermes pm install" in output

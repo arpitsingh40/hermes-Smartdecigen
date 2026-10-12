@@ -30,7 +30,9 @@ cp "$HERE/smartdecigen/skins/smartdecigen.yaml" "$HERMES_HOME/skins/"
 echo "  skin:   smartdecigen"
 
 echo
-echo "Installed. Next steps:"
+echo "Installed. (The SmartDecigen Windows desktop app does all of this automatically on first launch.)"
+echo
+echo "Next steps:"
 echo
 echo "  1. Enable the plugins:"
 echo "       hermes plugins enable forge-brain"

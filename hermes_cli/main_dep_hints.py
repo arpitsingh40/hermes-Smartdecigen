@@ -42,3 +42,20 @@ def smart_app_control_block_message(error: BaseException) -> str | None:
         "",
         "See https://aka.ms/smartappcontrol for Windows Smart App Control details.",
     ])
+
+
+def require_dashboard_web_deps() -> None:
+    """Exit with the right message when the dashboard's web-server packages can't import.
+
+    A plain missing-package ImportError gets the standard repair guidance; the
+    ``DLL load failed ... _ssl`` signature of Windows Smart App Control blocking the
+    embedded runtime gets the policy guidance instead, so users stop looping on
+    repair for a block repair can never lift (#63796)."""
+    try:
+        import fastapi
+        import uvicorn
+    except ImportError as e:
+        print(smart_app_control_block_message(e) or missing_optional_deps_message(
+            "dashboard", "its web-server packages (fastapi, uvicorn)", "all"))
+        print(f"Details: {e}")
+        raise SystemExit(1)

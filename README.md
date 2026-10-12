@@ -32,6 +32,16 @@ Use any model you want — [Nous Portal](https://portal.nousresearch.com), OpenR
 
 ---
 
+## SmartDecigen for Windows (one-click desktop app)
+
+1. Download **SmartDecigen-Setup.exe** from this repo's [Releases page](https://github.com/arpitsingh40/hermes-Smartdecigen/releases/latest).
+2. Double-click it. If Windows SmartScreen says "Windows protected your PC", click **More info → Run anyway** (the installer is not code-signed yet).
+3. SmartDecigen opens when setup finishes. Pick your AI provider and paste your API key on the first screen — that's it.
+
+No admin rights, Python, Node or command line needed. The installer adds Desktop and Start Menu shortcuts, and the app installs and enables the SmartDecigen FORGE plugins (`forge-brain`, `forge-growth`, `forge-voice`, `forge-exec`, `forge-loop`) and the SmartDecigen skin on first launch. `forge-exec` stays in dry-run mode until you set `FORGE_EXEC_LIVE=1`; `forge-confirm` and `ari-governance` stay off until you enable them. Your data lives in `%LOCALAPPDATA%\hermes` and survives reinstall/uninstall.
+
+Maintainers: push a tag like `smartdecigen-v1.0.0` and the [SmartDecigen Windows installer](.github/workflows/smartdecigen-windows.yml) workflow builds the installer and publishes the release.
+
 ## Quick Install
 
 ### Linux, macOS, WSL2

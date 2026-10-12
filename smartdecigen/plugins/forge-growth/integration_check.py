@@ -16,7 +16,7 @@ CASES = [
     ("we are running out of money, burn rate too high", True),
     ("growth has stalled, how do we 10x", True),
     ("how do we grow this business", True),
-    ("read the file at /tmp/x", False),
+    ("read the file at notes/x.txt", False),
     ("what is the capital of France", False),
     ("git status", False),
     ("fix the typo in line 42", False),

@@ -152,7 +152,8 @@ test.each([
       assert.deepEqual(current, await identityForVariant(variant))
 
       if (commit) {
-        assert.equal(current.displayName, `${display} ${commit.slice(0, 7)}`)
+        // SmartDecigen keeps the clean product name on commit builds it ships to users.
+        assert.equal(current.displayName, display)
       }
 
       for (const previous of identities) {
@@ -164,6 +165,9 @@ test.each([
           'windowsExecutableName',
           'cliName'
         ] as const) {
+          if (commit && field === 'displayName') {
+            continue
+          }
           assert.notEqual(current[field], previous[field], `${field} must isolate installations`)
 
           if (commit) {
